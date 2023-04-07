@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Battleship {
-    private String[][] board;
+    String[][] board;
     private String[][] boardMask;
     private boolean horizontal;
     private boolean vertical;
@@ -20,7 +20,7 @@ public class Battleship {
 
         for (int i = 0; i < board.length; i++) {
             if (i == 0) {
-                board[0][i] = String.valueOf(" ");
+                board[0][i] = " ";
                 continue;
             }
             board[0][i] = String.valueOf(i);
@@ -46,7 +46,7 @@ public class Battleship {
         }
     }
 
-    private void printBoard() {
+    void printBoard() {
         for (String[] strings : board) {
             for (String a : strings) {
                 System.out.print(a  + " ");
@@ -55,7 +55,7 @@ public class Battleship {
         }
     }
 
-    private void printMask() {
+    void printMask() {
         for (String[] strings : boardMask) {
             for (String a : strings) {
                 System.out.print(a  + " ");
@@ -73,9 +73,7 @@ public class Battleship {
                 for (int i = cFirst; i <= cSecond; i++) {
                     board[i][pair] = "O";
                     
-                }
-                
-            
+                }     
             vertical = false;
             
         } else if (horizontal) {
@@ -140,11 +138,11 @@ public class Battleship {
         boolean hLength = sNumber + 1 - fNumber == length || sNumber - (fNumber - 1) == length; // true
         
         if ((v && vLength) ^ (h && hLength)) {
-                if (v) vertical = true;
-                if (h) horizontal = true;
+            if (v) vertical = true;
+            if (h) horizontal = true;
             
 
-        } else if  (v && (vLength == false)|| h && (hLength == false)) {
+        } else if  (v && !vLength || h && !hLength) {
             System.out.println("Error! Wrong length of the "+ piece +"! Try again:");
             System.out.println();
             return false;
@@ -188,10 +186,7 @@ public class Battleship {
     }
 
     private static boolean checkShotCoordinates(char letter, int number) {
-        if ((number > 10 && number < 1) && (letter > 'J' && letter < 'A')) {
-            return false;
-        }
-        return true;
+        return (number < 10 || number > 1) || (letter < 'J' || letter > 'A');
     }
     
     private boolean checkOccupancyVertical(int i, int pair, Battleship player) {
@@ -219,11 +214,7 @@ public class Battleship {
 
         }
         
-        if (up || down || left || right) {
-            return true;
-            
-        }
-        return false;
+        return up || down || left || right;
 
     }
 
@@ -252,11 +243,7 @@ public class Battleship {
 
         }
         
-        if (up || down || left || right) {
-            return true;
-            
-        }
-        return false;
+        return up || down || left || right;
 
     } 
     
@@ -361,13 +348,13 @@ public class Battleship {
                     int fLetter_num = subNumbers.get(subLetters.indexOf(fLetter));
                     int sLetter_num = subNumbers.get(subLetters.indexOf(sLetter));
     
-                    int sub_cFirst = (fLetter_num > sLetter_num) ? sLetter_num : fLetter_num;
-                    int sub_cSecond = (fLetter_num > sLetter_num) ? fLetter_num : sLetter_num;
+                    int sub_cFirst = Math.min(fLetter_num, sLetter_num);
+                    int sub_cSecond = Math.max(fLetter_num, sLetter_num);
                     fLetter_num = sub_cFirst;
                     sLetter_num = sub_cSecond;
                     
-                    int sub_First = (fNumber > sNumber) ? sNumber : fNumber;
-                    int sub_Second = (fNumber > sNumber) ? fNumber : sNumber;
+                    int sub_First = Math.min(fNumber, sNumber);
+                    int sub_Second = Math.max(fNumber, sNumber);
                     fNumber = sub_First;
                     sNumber = sub_Second;
     
@@ -379,7 +366,7 @@ public class Battleship {
                     
                     }
                 }
-                playersReady[i] = (j == 4) ? true : false;
+                playersReady[i] = (j == 4);
             }
             System.out.println();
             printPass(scan);
@@ -389,8 +376,8 @@ public class Battleship {
         System.out.println();
         System.out.println("The game starts!");
         System.out.println();
-        boolean checkPlayer1 = true;
-        boolean checkPlayer2 = true;
+        boolean checkPlayer1;
+        boolean checkPlayer2;
         boolean player1Turn = true;
         boolean player2Turn = false;
 
@@ -406,7 +393,7 @@ public class Battleship {
             boolean check = checkShotCoordinates(letter, number);
             int Letter_num = subNumbers.get(subLetters.indexOf(letter));
 
-            if (!check) {
+            if (check) {
                 System.out.println("Error! You entered the wrong coordinates! Try again:");
                 System.out.println();
                 continue;
