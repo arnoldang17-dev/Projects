@@ -40,7 +40,7 @@ while True:
                         
             except Exception:
                 print("Please, input a single letter.")
-                continue;
+                continue
                 
             if "".join(code2) == code:
                 print(f"You guessed the word {code}!")
