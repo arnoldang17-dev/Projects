@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -52,10 +50,6 @@ public class Main {
             return false;
         }
     }
-
-    private boolean isGapful(long n) {
-        
-    }
     private void  printMessage(Scanner scan) {
         System.out.println("Welcome to Amazing Numbers!\n");
         System.out.println("Supported requests: ");
@@ -66,57 +60,25 @@ public class Main {
 
             try {
                 System.out.println("Enter a request: ");
-                String n = scan.nextLine();
-                ArrayList<String> twoNum = new ArrayList<>(Arrays.asList(n.split(" ")));
-                System.out.println(twoNum.toString());
-                if (twoNum.get(0).equals("0")){
+                long n = scan.nextLong();
+                if (n == 0){
                     System.out.println("Goodbye!");
                     break;
                 } 
+                if (n < 0) throw new Exception();
+                
+                System.out.println();
+                System.out.println(String.format("Properties of %,d", n));
+                System.out.printf("\teven: %b\n", isEvenOrOdd(n));
+                System.out.printf("\t odd: %b\n", !isEvenOrOdd(n));
+                System.out.printf("\tbuzz: %b\n", isBuzzNumber(n));
+                System.out.printf("\tduck: %b\n", isDuckNumber(n));
+                System.out.printf(" palindromic: %b\n", isPalindrome(n));
 
-                System.out.println(Integer.parseInt(twoNum.get(0)) < 0);
-                if (Integer.parseInt(twoNum.get(0)) < 0) throw new Exception();
-
-                if (twoNum.size() == 2) {
-                                        
-                    for (int i = Integer.parseInt(twoNum.get(0)); i <= Integer.parseInt(twoNum.get(1)); i++) {
-                        StringBuilder message = new StringBuilder();
-
-                        message.append(i + " is ");
-                        
-                        if (isBuzzNumber(i)) {
-                            message.append("buzz, ");
-                        }
-                        
-                        if (isPalindrome(i)) {
-                            message.append("palindromic, ");
-                        }
-                        
-                        if (isEvenOrOdd(i) == true) {
-                            message.append("even");
-                        } else {
-                            message.append("odd");
-                        }
-
-                        System.out.println(message.toString());
-                    }    
-
-                } else {
-                    long nVal = Long.parseLong(n);
-                    System.out.println();
-                    System.out.println(String.format("Properties of %,d", nVal));
-                    System.out.printf("\teven: %s\n", isEvenOrOdd(nVal));
-                    System.out.printf("\t odd: %s\n", !isEvenOrOdd(nVal));
-                    System.out.printf("\tbuzz: %s\n", isBuzzNumber(nVal));
-                    System.out.printf("\tduck: %s\n", isDuckNumber(nVal));
-                    System.out.printf(" palindromic: %s\n", isPalindrome(nVal));
-
-                }
+                
             } catch (Exception e) {
                 // TODO: handle exception
-                System.out.println(e.getMessage());
                 System.out.println("The first parameter should be a natural number or zero.\n");
-                scan.next();
                 
             }
         }
@@ -130,4 +92,3 @@ public class Main {
         
     }
 }
-
