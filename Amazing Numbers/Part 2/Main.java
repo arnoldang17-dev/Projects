@@ -31,12 +31,18 @@ public class Main {
 
                 }
 
-                if (nVal.charAt(0) == 0 && nVal.substring(1).contains("0")) {
+                if (nVal.charAt(0) == 0 && nVal.substring(1).contains("0") || nVal.substring(1).contains("0")) {
                     
                     duck = true;
                 } else {
                     duck = false;
                 }
+
+                System.out.printf("Properties of %d\n", n);
+                System.out.printf("\teven: %b\n", even);
+                System.out.printf("\t odd: %b\n", odd);
+                System.out.printf("\tbuzz: %b\n", buzz);
+                System.out.printf("\tduck: %b\n", duck);
                 
                 break;
             } catch (Exception e) {
